@@ -151,7 +151,7 @@ exports.resendOTP = async (req, res) => {
     }
 };
 
-exports.login = async( req, res) => {
+exports.login = async( req, res, next) => {
     try {
         const { email, password } = req.body
 
@@ -193,12 +193,31 @@ exports.login = async( req, res) => {
     }
 }
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsers = async (req, res, next) => {
     try {
         const users = await userModel.find().select('-password');
         res.status(200).json({
             message: 'All users fetched successfully',
             users
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.getUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const user = await userModel.findById(id).select('-password');
+        if (!user) {
+            return next({
+                message: `User not found`,
+                statusCode: 404
+            })
+        }
+        res.status(200).json({
+            message: 'User fetched successfully',
+            user
         })
     } catch (error) {
         next(error);

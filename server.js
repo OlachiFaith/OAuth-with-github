@@ -8,6 +8,7 @@ const orderRouter = require('./routes/order')
 const facebookRoute = require('./routes/facebook')
 const locationRoute = require('./routes/location')
 const weatherRoute = require('./routes/weather')
+const pregnancyRoute = require('./routes/pregnancy')
 const expressSession = require('express-session')
 const passport = require('passport');
 require('./controller/passport')
@@ -28,6 +29,7 @@ app.use('/api/v1/restaurant', restaurantRouter);
 app.use('/api/v1/order`', orderRouter);
 app.use('/api/v1/location', locationRoute);
 app.use('/api/v1/weather', weatherRoute);
+app.use('/api/v1/pregnancy', pregnancyRoute);
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -51,6 +53,20 @@ const swaggerDefinition = {
       description: 'Development server',
     },
   ],
+  security: [
+    {
+        bearerAuth: []
+    }
+  ],
+  components: {
+    securitySchemes: {
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+        }
+    }
+  }
 };
 
 const options = {
