@@ -49,7 +49,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:9065',
+      url: 'https://oauth-with-github.onrender.com',
       description: 'Development server',
     },
   ],
